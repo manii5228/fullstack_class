@@ -1,0 +1,10 @@
+<button  onclick="duplicate()">Click Me</button>
+<div id="c"></div>
+<script>
+    var div=document.getElementById("c")
+    function duplicate(){
+        var listitem=document.createElement("h1")
+        listitem.textContent="Hello"
+        div.append(listitem)
+    }
+</script>
