@@ -1,0 +1,14 @@
+<div id="box">
+    <p>Hello world</p>
+</div>
+<script>
+    //var div = document.getElementById("one")
+    var h1Element= document.createElement("h1");
+    h1Element.innerHTML="bye"
+
+    var divbox = document.getElementById("box");
+    //divbox.append(h1Element)
+    //divbox.prepend(h1Element)
+    divbox.insertAdjacentElement("beforebegin",h1Element)
+    console.log(h1Element)
+</script>
