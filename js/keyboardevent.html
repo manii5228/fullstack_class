@@ -1,0 +1,10 @@
+<input type="text" id ="box" placeholder="Type something bro....">
+<p id="msg"></p>
+<script>
+    document.getElementById("box").addEventListener("keydown",
+    function(event){
+        document.getElementById("msg").innerText="key Pressed"+event.key;
+    });
+</script>
+
+
