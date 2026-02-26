@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Records</title>
+    <style>
+        body{
+            font-family: Arial;
+            padding: 30px;
+        }
+        input, select, button{
+            padding: 6px;
+            margin: 5px;
+        }
+        table{
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+            color: blue;
+        }
+        th, td{
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th{
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Student Records</h2>
+
+<input id="name" placeholder="Name">
+<input id="dob" type="date">
+<input id="department" placeholder="Department">
+<button onclick="add()">Add</button>
+
+<br><br>
+
+<select id="sort">
+    <option value="">Sort By</option>
+    <option value="name">Name</option>
+    <option value="dob">Date</option>
+</select>
+
+<input id="filterDept" placeholder="Filter by Department">
+<button onclick="apply()">Apply</button>
+<button onclick="countDept()">Count per Department</button>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>DOB</th>
+            <th>Department</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+<p id="countResult"></p>
+
+<script>
+
+    var students = [];
+
+    function add(){
+        var name = document.getElementById("name").value;
+        var dob = document.getElementById("dob").value;
+        var department = document.getElementById("department").value;
+
+        students.push({name, dob, department});
+        display(students);
+    }
+
+    function del(index){
+        students.splice(index,1);
+        display(students);
+    }
+
+    function display(data){
+        var table = document.getElementById("tableBody");
+        table.innerHTML = "";
+
+        data.forEach(function(student, index){
+            table.innerHTML += `
+                <tr>
+                    <td>${student.name}</td>
+                    <td>${student.dob}</td>
+                    <td>${student.department}</td>
+                    <td><button onclick="del(${index})">Delete</button></td>
+                </tr>
+            `;
+        });
+    }
+
+    function apply(){
+        var sortValue = document.getElementById("sort").value;
+        var filterValue = document.getElementById("filterDept").value;
+
+        var filtered = students;
+
+        // Filter
+        if(filterValue){
+            filtered = students.filter(s => 
+                s.department.toLowerCase() === filterValue.toLowerCase()
+            );
+        }
+
+        // Sorting
+        if(sortValue === "name"){
+            filtered.sort((a,b) => a.name.localeCompare(b.name));
+        }
+        else if(sortValue === "dob"){
+            filtered.sort((a,b) => new Date(a.dob) - new Date(b.dob));
+        }
+
+        display(filtered);
+    }
+
+    function countDept(){
+        var count = {};
+
+        students.forEach(function(s){
+            count[s.department] = (count[s.department] || 0) + 1;
+        });
+
+        var result = "Students per Department: <br>";
+        for(var dept in count){
+            result += dept + " : " + count[dept] + "<br>";
+        }
+
+        document.getElementById("countResult").innerHTML = result;
+    }
+
+</script>
+
+</body>
+</html>
