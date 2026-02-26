@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Event Sync Engine</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Real-Time Event Synchronization</h1>
+
+    <div class="container">
+        <div class="event-form">
+            <input type="text" id="eventInput" placeholder="Enter event message">
+            <button onclick="sendEvent()">Send Event</button>
+        </div>
+
+        <div class="event-log">
+            <h2>Event Stream</h2>
+            <ul id="eventList"></ul>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
