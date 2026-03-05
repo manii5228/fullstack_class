@@ -1,6 +1,6 @@
 const express = require("express");
 const http = require("http");
-const { Server } = require("socket.io");
+const {Server} = require("socket.io");
 const mysql = require("mysql2");
 
 const app = express();
@@ -9,55 +9,60 @@ const io = new Server(server);
 
 app.use(express.static("public"));
 
-/* MySQL connection */
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "vtu24573",
-    database: "event_sync"
+host:"localhost",
+user:"root",
+password:"vtu24573",
+database:"event_sync"
 });
 
-db.connect((err) => {
-    if (err) {
-        console.log("Database connection failed:", err);
-        return;
-    }
-    console.log("MySQL connected");
+db.connect(()=>console.log("MySQL connected"));
+
+let activeUsers = new Set();
+
+io.on("connection",(socket)=>{
+
+activeUsers.add(socket.id);
+io.emit("user_count",activeUsers.size);
+
+db.query("SELECT * FROM events ORDER BY id DESC LIMIT 100",(err,res)=>{
+if(!err) socket.emit("sync_history",res);
 });
 
-/* WebSocket logic */
-io.on("connection", (socket) => {
+socket.on("new_event",(event)=>{
 
-    /* Send stored events to new client */
-    db.query("SELECT * FROM events ORDER BY id DESC", (err, results) => {
-        if (!err) {
-            socket.emit("sync_history", results);
-        }
-    });
+console.log("Event received:", event);
+db.query(
+"INSERT INTO events (user,message,priority,category,timestamp) VALUES (?,?,?,?,NOW())",
+[event.user,event.message,event.priority,event.category],
+(err,result)=>{
 
-    /* Receive new event */
-    socket.on("new_event", (event) => {
+if(err){
+console.log("DB ERROR:",err);
+return;
+}
 
-        const query = "INSERT INTO events (message) VALUES (?)";
+console.log("Event inserted:",result.insertId);
 
-        db.query(query, [event.message], (err, result) => {
-            if (err) return;
 
-            const savedEvent = {
-                id: result.insertId,
-                message: event.message,
-                timestamp: new Date()
-            };
+const savedEvent={
+id:result.insertId,
+user:event.user,
+message:event.message,
+priority:event.priority,
+category:event.category,
+timestamp: new Date().toLocaleString()};
 
-            io.emit("broadcast_event", savedEvent);
-        });
-    });
-
-    socket.on("disconnect", () => {
-        console.log("Client disconnected");
-    });
+io.emit("broadcast_event",savedEvent);
 });
 
-server.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
 });
+
+socket.on("disconnect",()=>{
+activeUsers.delete(socket.id);
+io.emit("user_count",activeUsers.size);
+});
+
+});
+
+server.listen(3000,()=>console.log("Server running on http://localhost:3000"));

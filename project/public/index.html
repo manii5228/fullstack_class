@@ -1,25 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Real-Time Event Sync Engine</title>
-    <link rel="stylesheet" href="style.css">
+<title>Event Synchronization Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.ico">
 </head>
+
 <body>
-    <h1>Real-Time Event Synchronization</h1>
 
-    <div class="container">
-        <div class="event-form">
-            <input type="text" id="eventInput" placeholder="Enter event message">
-            <button onclick="sendEvent()">Send Event</button>
-        </div>
+<div class="sidebar">
 
-        <div class="event-log">
-            <h2>Event Stream</h2>
-            <ul id="eventList"></ul>
-        </div>
-    </div>
+<h2>SYNC ENGINE</h2>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
+<div class="profile">
+<div class="avatar"></div>
+<p id="profileName"></p>
+</div>
+
+<div class="status">
+Connection: <span id="connectionStatus">offline</span>
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="stats">
+
+<div class="card">
+<h3>Total Events</h3>
+<p id="eventCount">0</p>
+</div>
+
+<div class="card">
+<h3>Active Users</h3>
+<p id="userCount">0</p>
+</div>
+
+<div class="card">
+<h3>Events/sec</h3>
+<p id="rate">0</p>
+</div>
+
+</div>
+
+<div class="event-controls">
+
+<input id="eventInput" placeholder="Enter event message">
+
+<select id="priority">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+
+<select id="category">
+<option>System</option>
+<option>User</option>
+<option>IoT</option>
+</select>
+
+<button onclick="sendEvent()">Send</button>
+
+</div>
+
+<input id="searchBox" placeholder="Search events">
+
+<div class="event-stream">
+<ul id="eventList"></ul>
+</div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>

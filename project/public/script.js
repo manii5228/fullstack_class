@@ -1,41 +1,101 @@
 const socket = io();
-const eventList = document.getElementById("eventList");
 
-function appendEvent(event) {
-    const li = document.createElement("li");
-    li.textContent = `[${event.timestamp}] ${event.message}`;
-    eventList.prepend(li);
+const list = document.getElementById("eventList");
+const input = document.getElementById("eventInput");
+
+let username = localStorage.getItem("username");
+
+if(!username){
+username = prompt("Enter your name");
+localStorage.setItem("username",username);
 }
 
-function sendEvent() {
-    const input = document.getElementById("eventInput");
-    const message = input.value.trim();
+document.getElementById("profileName").innerText=username;
 
-    if (!message) return;
-
-    socket.emit("new_event", { message });
-    input.value = "";
-}
-
-// Receive full history on sync
-socket.on("sync_history", (history) => {
-    eventList.innerHTML = "";
-    history.slice().reverse().forEach(appendEvent);
+input.addEventListener("keypress",(e)=>{
+if(e.key==="Enter") sendEvent();
 });
 
-// Receive live events
-socket.on("broadcast_event", (event) => {
-    appendEvent(event);
+let eventCounter=0;
+let eventsThisSecond=0;
+
+setInterval(()=>{
+document.getElementById("rate").innerText=eventsThisSecond;
+eventsThisSecond=0;
+},1000);
+
+function sendEvent(){
+
+const message=input.value.trim();
+if(!message) return;
+console.log("Sending event:", message);
+
+
+const priority=document.getElementById("priority").value;
+const category=document.getElementById("category").value;
+
+socket.emit("new_event",{
+user:username,
+message:message,
+priority:priority,
+category:category
 });
 
-function appendEvent(event) {
-    const li = document.createElement("li");
-    li.textContent = `[${event.timestamp}] ${event.message}`;
-
-    eventList.prepend(li);
-
-    /* remove pulse after animation finishes */
-    setTimeout(()=>{
-        li.style.borderLeftColor = "#6b7280";
-    },1500);
+input.value="";
 }
+
+function appendEvent(e){
+
+const li=document.createElement("li");
+
+li.innerHTML =
+`
+<div class="eventHeader">
+<b>${e.user}</b>
+<span class="tag ${e.priority}">${e.priority}</span>
+<span class="tag">${e.category}</span>
+</div>
+
+<div class="eventMsg">${e.message}</div>
+
+<small>${e.timestamp}</small>
+`;
+
+list.prepend(li);
+
+eventCounter++;
+eventsThisSecond++;
+
+document.getElementById("eventCount").innerText=eventCounter;
+}
+
+socket.on("connect",()=>{
+document.getElementById("connectionStatus").innerText="online";
+});
+
+socket.on("sync_history",(history)=>{
+history.reverse().forEach(appendEvent);
+});
+
+socket.on("broadcast_event",(e)=>{
+appendEvent(e);
+});
+
+socket.on("user_count",(count)=>{
+document.getElementById("userCount").innerText=count;
+});
+
+/* search filter */
+
+document.getElementById("searchBox").addEventListener("input",(e)=>{
+
+const term=e.target.value.toLowerCase();
+
+document.querySelectorAll("#eventList li").forEach(li=>{
+li.style.display =
+li.innerText.toLowerCase().includes(term)
+? "block"
+: "none";
+});
+
+});
