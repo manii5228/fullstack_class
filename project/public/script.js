@@ -27,3 +27,15 @@ socket.on("sync_history", (history) => {
 socket.on("broadcast_event", (event) => {
     appendEvent(event);
 });
+
+function appendEvent(event) {
+    const li = document.createElement("li");
+    li.textContent = `[${event.timestamp}] ${event.message}`;
+
+    eventList.prepend(li);
+
+    /* remove pulse after animation finishes */
+    setTimeout(()=>{
+        li.style.borderLeftColor = "#6b7280";
+    },1500);
+}
