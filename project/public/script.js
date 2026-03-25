@@ -85,6 +85,56 @@ socket.on("user_count",(count)=>{
 document.getElementById("userCount").innerText=count;
 });
 
+function logout(){
+
+localStorage.removeItem("user");
+
+location.href="/login.html";
+
+}
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+document.getElementById("profileName").innerText=user.username;
+
+fetch(`/userStats/${user.id}`)
+.then(res=>res.json())
+.then(data=>{
+
+document.getElementById("totalEvents").innerText=data.total;
+
+});
+fetch(`/contribution/${user.id}`)
+.then(res=>res.json())
+.then(data=>{
+
+const grid=document.getElementById("contributionGrid");
+
+const map={};
+
+data.forEach(d=>{
+map[d.day]=d.count;
+});
+
+for(let i=0;i<365;i++){
+
+const cell=document.createElement("div");
+
+const date=new Date();
+
+date.setDate(date.getDate()-i);
+
+const key=date.toISOString().slice(0,10);
+
+const count=map[key] || 0;
+
+cell.className="cell level"+Math.min(count,4);
+
+grid.appendChild(cell);
+
+}
+
+});
 /* search filter */
 
 document.getElementById("searchBox").addEventListener("input",(e)=>{

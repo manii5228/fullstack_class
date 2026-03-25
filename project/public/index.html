@@ -42,6 +42,21 @@ Connection: <span id="connectionStatus">offline</span>
 <p id="rate">0</p>
 </div>
 
+<div class="profileBox">
+
+<h3>Profile</h3>
+
+<p id="profileName"></p>
+
+<p>Total Events:</p>
+<h2 id="totalEvents">0</h2>
+
+<div id="contributionGrid"></div>
+
+<button onclick="logout()">Logout</button>
+
+</div>
+
 </div>
 
 <div class="event-controls">
@@ -69,7 +84,7 @@ Connection: <span id="connectionStatus">offline</span>
 <div class="event-stream">
 <ul id="eventList"></ul>
 </div>
-
+<div id="contributionGrid"></div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
