@@ -1,0 +1,7 @@
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=vtu24573
+DB_NAME=event_sync_db
+
+JWT_SECRET=super_secure_key
+PORT=5000
