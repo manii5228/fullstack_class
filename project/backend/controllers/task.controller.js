@@ -4,17 +4,18 @@ const eventService = require("../services/event.service");
 exports.createTask = async (req, res) => {
   const {
     title,
-    description,
-    difficulty,
-    priority_score,
+    status = 'pending',
+    difficulty = 'medium',
     deadline,
-    assigned_to
+    description = '',
+    priority_score = 1,
+    assigned_to = req.user.id
   } = req.body;
 
   const [result] = await db.execute(
     `INSERT INTO tasks
-     (title,description,difficulty,priority_score,deadline,assigned_to,created_by)
-     VALUES (?,?,?,?,?,?,?)`,
+     (title,description,difficulty,priority_score,deadline,assigned_to,created_by,status)
+     VALUES (?,?,?,?,?,?,?,?)`,
     [
       title,
       description,
@@ -22,7 +23,8 @@ exports.createTask = async (req, res) => {
       priority_score,
       deadline,
       assigned_to,
-      req.user.id
+      req.user.id,
+      status
     ]
   );
 

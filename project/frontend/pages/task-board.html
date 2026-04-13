@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Tasks</title>
+
+<link rel="stylesheet" href="../css/global.css">
+
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<div id="sidebar"></div>
+
+<div class="main">
+
+<h2>Tasks</h2>
+
+<input
+placeholder="search"
+id="search"
+>
+
+<button onclick="createTask()">
+New Task
+</button>
+
+<div id="createForm" style="display:none;">
+<input id="title" placeholder="Title">
+<input id="status" placeholder="Status">
+<input id="difficulty" placeholder="Difficulty">
+<input id="deadline" type="date" placeholder="Deadline">
+<button onclick="submitTask()">Submit</button>
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Title</th>
+
+<th>Status</th>
+
+<th>Difficulty</th>
+
+<th>Deadline</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="taskTable"></tbody>
+
+</table>
+
+</div>
+
+<script src="../js/config.js"></script>
+
+<script src="../js/api.js"></script>
+
+<script src="../js/tasks.js"></script>
+
+<script src="../js/loadComponents.js"></script>
+
+</body>
+
+</html>

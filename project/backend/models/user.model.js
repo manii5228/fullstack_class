@@ -6,11 +6,11 @@ exports.createUser = async (user) => {
     VALUES (?,?,?,?,?)
   `;
   return db.execute(sql, [
-    user.name,
-    user.email,
-    user.password_hash,
-    user.role,
-    user.team_id
+    user.name || null,
+    user.email || null,
+    user.password_hash || null,
+    user.role || 'EMPLOYEE',
+    user.team_id || null
   ]);
 };
 
@@ -18,6 +18,14 @@ exports.findByEmail = async (email) => {
   const [rows] = await db.execute(
     "SELECT * FROM users WHERE email=?",
     [email]
+  );
+  return rows[0];
+};
+
+exports.findById = async (id) => {
+  const [rows] = await db.execute(
+    "SELECT * FROM users WHERE user_id=?",
+    [id]
   );
   return rows[0];
 };

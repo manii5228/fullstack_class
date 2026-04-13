@@ -12,4 +12,10 @@ router.post(
 require("../middleware/auth.middleware"),
 controller.logout
 );
+
+router.get("/profile",
+require("../middleware/auth.middleware"),
+controller.profile
+);
+
 module.exports = router;

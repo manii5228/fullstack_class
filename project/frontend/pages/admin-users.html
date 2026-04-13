@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Users</title>
+
+<link rel="stylesheet" href="../css/global.css">
+
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<div id="sidebar"></div>
+
+<div class="main">
+
+<h2>Users</h2>
+
+<button id="btnCreateUser" class="btn">
+Add User
+</button>
+
+<div id="createUserForm" style="display:none; margin-top: 15px; padding: 15px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border-light);">
+<input id="name" placeholder="Name">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<input id="role" placeholder="Role (e.g. EMPLOYEE)">
+<button id="btnSubmitUser" class="btn">Submit</button>
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Role</th>
+
+</tr>
+
+</thead>
+
+<tbody id="userTable"></tbody>
+
+</table>
+
+</div>
+
+<script src="../js/config.js"></script>
+
+<script src="../js/api.js"></script>
+
+<script src="../js/user.js"></script>
+
+<script src="../js/loadComponents.js"></script>
+
+</body>
+
+</html>

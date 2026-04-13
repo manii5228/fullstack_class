@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #8a63e5;
+  --primary-hover: #7b5cff;
+  --bg-color: #0d0f1a;
+  --sidebar-bg: rgba(18, 20, 31, 0.7);
+  --card-bg: rgba(25, 27, 42, 0.6);
+  --text-main: #f3f0ff;
+  --text-muted: #9499ab;
+  --border-light: rgba(138, 99, 229, 0.15);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --glass-backdrop: blur(16px);
+}
+
+body {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-color);
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(138, 99, 229, 0.08), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(88, 101, 242, 0.08), transparent 25%);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+.main {
+  margin-left: 260px;
+  padding: 100px 40px 40px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  animation: fadeIn 0.4s ease-out;
+}
+
+h1, h2, h3, h4 {
+  margin-top: 0;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+h2 {
+  margin-bottom: 25px;
+  font-weight: 600;
+  font-size: 28px;
+  background: linear-gradient(120deg, #fff, #b794ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+input, select {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 8px 5px;
+  width: 200px;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(138, 99, 229, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

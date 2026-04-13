@@ -35,10 +35,11 @@ async (req,res,next)=>{
 
     next();
 
-  }catch{
+  }catch(err){
 
+    console.error("JWT Error:", err);
     res.status(403)
-    .json({message:"invalid token"});
+    .json({message:"invalid token", error: err.message});
 
   }
 

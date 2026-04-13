@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Teams</title>
+
+<link rel="stylesheet" href="../css/global.css">
+
+<link rel="stylesheet" href="../css/components.css">
+
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<div id="sidebar"></div>
+
+<div class="main">
+
+<h2>Teams</h2>
+
+<div id="createTeamForm" style="margin-bottom: 25px; padding: 20px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border-light);">
+<input id="teamName" placeholder="Team Name">
+<input id="managerId" type="number" placeholder="Manager User ID">
+<button id="btnCreateTeam" class="btn">Create Team</button>
+</div>
+
+<div id="teamList" class="grid-3"></div>
+
+</div>
+
+<script src="../js/config.js"></script>
+
+<script src="../js/api.js"></script>
+
+<script src="../js/teams.js"></script>
+
+<script src="../js/loadComponents.js"></script>
+
+</body>
+
+</html>

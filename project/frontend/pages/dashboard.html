@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Dashboard</title>
+
+<link rel="stylesheet"
+href="../css/global.css">
+
+<link rel="stylesheet" href="../css/components.css">
+
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<div id="sidebar"></div>
+
+<div class="main">
+
+<h2>Dashboard</h2>
+
+<div class="grid-4">
+
+<div class="card">
+<h4>Total Tasks</h4>
+<h2 id="totalTasks"></h2>
+</div>
+
+<div class="card">
+<h4>Completed</h4>
+<h2 id="completed"></h2>
+</div>
+
+<div class="card">
+<h4>Overdue</h4>
+<h2 id="overdue"></h2>
+</div>
+
+<div class="card">
+<h4>Active Users</h4>
+<h2 id="users"></h2>
+</div>
+
+</div>
+<div class="card">
+
+Tasks by Difficulty
+
+<canvas id="chart"></canvas>
+
+</div>
+
+</div>
+
+<script src="../js/config.js"></script>
+
+<script src="../js/api.js"></script>
+
+<script src="../js/dashboard.js"></script>
+
+<script src="../js/loadComponents.js"></script>
+
+</body>
+
+</html>

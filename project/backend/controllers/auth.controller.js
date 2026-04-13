@@ -46,3 +46,16 @@ exports.logout = async (req,res)=>{
   });
 
 };
+
+exports.profile = async (req,res)=>{
+  const user = await User.findById(req.user.id);
+  const [completed] = await db.execute(`
+    SELECT COUNT(*) as completed_tasks FROM tasks WHERE user_id = ? AND status = 'completed'
+  `, [req.user.id]);
+  res.json({
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    completed_tasks: completed[0].completed_tasks
+  });
+};

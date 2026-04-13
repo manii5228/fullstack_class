@@ -8,14 +8,24 @@ SELECT
 
 COUNT(*) total_tasks,
 
-SUM(status='Completed') completed,
+SUM(status='completed') completed,
 
-SUM(deadline < NOW()) overdue
+SUM(deadline < NOW() AND status != 'completed') overdue
 
 FROM tasks
 
 `);
 
-res.json(data[0]);
+const [users] = await db.execute(`
+
+SELECT COUNT(*) active_users FROM users WHERE active=1
+
+`);
+
+const result = data[0];
+result.completed_percent = result.total_tasks > 0 ? (result.completed / result.total_tasks * 100).toFixed(1) : 0;
+result.active_users = users[0].active_users;
+
+res.json(result);
 
 };

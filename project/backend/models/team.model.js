@@ -6,9 +6,9 @@ exports.createTeam = async (team)=>{
     INSERT INTO teams
     (team_name,manager_id)
     VALUES (?,?)
-  `,[
-    team.team_name,
-    team.manager_id
+  `, [
+    team.team_name || null,
+    team.manager_id !== undefined ? team.manager_id : null
   ]);
 
 };

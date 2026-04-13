@@ -6,7 +6,7 @@ const [rows] = await db.execute(`
 
 SELECT
 DATE(timestamp) day,
-COUNT(*) intensity
+COUNT(*) level
 
 FROM events
 
