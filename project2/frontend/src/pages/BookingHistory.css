@@ -1,0 +1,24 @@
+.history-main { max-width: 1000px; margin: 0 auto; padding: 32px 24px; }
+.history-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+
+.history-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+@media (max-width: 640px) { .history-stats { grid-template-columns: repeat(2, 1fr); } }
+
+.bookings-list { display: flex; flex-direction: column; gap: 16px; }
+
+.booking-item { padding: 0; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+.booking-item.cancelled { opacity: 0.65; }
+.booking-item-color { height: 4px; width: 100%; flex-shrink: 0; }
+.booking-item-content { display: flex; justify-content: space-between; gap: 24px; padding: 20px; flex-wrap: wrap; }
+
+.booking-item-left { flex: 1; min-width: 200px; }
+.booking-event-name { font-family: 'Poppins', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+.booking-event-meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.8rem; color: var(--text-secondary); }
+
+.booking-item-right { display: flex; flex-direction: column; gap: 6px; min-width: 180px; }
+.booking-info-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.85rem; }
+.info-label { color: var(--text-muted); font-size: 0.78rem; }
+.paid-amount { color: var(--accent-3); font-size: 1.05rem; }
+.booking-item-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+.booking-date-badge { position: absolute; top: 12px; right: 16px; font-size: 0.72rem; color: var(--text-muted); }

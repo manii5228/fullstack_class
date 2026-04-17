@@ -1,0 +1,112 @@
+.navbar {
+  background: var(--bg-primary);
+  border-bottom: 2px solid var(--text-dark);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 72px;
+}
+
+.navbar-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  gap: 24px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  text-decoration: none;
+}
+.brand-icon { font-size: 1.8rem; }
+.brand-text { color: var(--text-dark); }
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  padding: 0 24px;
+}
+
+.nav-link {
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  transition: var(--transition);
+  text-decoration: none;
+}
+.nav-link:hover { background: var(--text-dark); color: var(--bg-primary); }
+.nav-link.active { background: var(--c-yellow); color: var(--c-maroon); font-weight: 800; }
+
+.navbar-actions { display: flex; align-items: center; gap: 12px; }
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 40px; height: 40px;
+  background: var(--c-maroon);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-sand);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.user-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+.hamburger span {
+  width: 22px; height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: var(--transition);
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .navbar-links {
+    display: none;
+    position: absolute;
+    top: 64px; left: 0; right: 0;
+    background: white;
+    flex-direction: column;
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    gap: 4px;
+  }
+  .navbar-links.open { display: flex; }
+  .user-name { display: none; }
+}

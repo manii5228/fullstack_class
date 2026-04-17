@@ -1,0 +1,48 @@
+.booking-main { max-width: 1050px; margin: 0 auto; padding: 24px; }
+.breadcrumb-sm { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; }
+.breadcrumb-sm a { color: var(--accent-2); font-weight: 500; }
+
+.booking-grid { display: grid; grid-template-columns: 1fr 380px; gap: 24px; align-items: start; }
+@media (max-width: 900px) { .booking-grid { grid-template-columns: 1fr; } .booking-summary-wrap { order: -1; } }
+
+.booking-form-wrap .card { padding: 32px; }
+
+/* Ticket counter */
+.ticket-counter { display: flex; align-items: center; gap: 8px; }
+.ticket-btn { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; flex-shrink: 0; }
+.ticket-input { text-align: center; width: 80px; flex-shrink: 0; }
+
+/* Booking progress */
+.booking-progress { display: flex; align-items: center; gap: 0; margin: 24px 0; }
+.progress-step { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.72rem; color: var(--text-muted); font-weight: 600; flex: 1; }
+.progress-step span { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; background: var(--border); color: var(--text-muted); }
+.progress-step.active span { background: var(--accent-2); color: white; }
+.progress-step.complete span { background: var(--success); color: white; }
+.progress-step.active { color: var(--accent-2); }
+.progress-line { flex: 1; height: 2px; background: var(--border); max-width: 60px; }
+
+/* Summary */
+.booking-summary { padding: 28px; position: sticky; top: 80px; }
+.summary-event-title { font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.summary-dept { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; }
+.summary-rows { display: flex; flex-direction: column; gap: 10px; }
+.summary-row { display: flex; justify-content: space-between; font-size: 0.875rem; color: var(--text-secondary); }
+.summary-row span:last-child { font-weight: 600; color: var(--text-primary); }
+.summary-total { display: flex; justify-content: space-between; align-items: center; }
+.summary-total span:first-child { font-weight: 700; font-size: 0.95rem; }
+.total-amount { font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--accent-3); }
+
+/* Confirmed */
+.booking-confirmed-wrap { max-width: 560px; margin: 60px auto; padding: 24px; }
+.booking-confirmed-card { padding: 40px; text-align: center; }
+.confirmed-icon { font-size: 4rem; margin-bottom: 12px; animation: bounceIn 0.6s ease; }
+@keyframes bounceIn { 0% { transform: scale(0); } 60% { transform: scale(1.1); } 100% { transform: scale(1); } }
+.confirmed-title { font-family: 'Poppins', sans-serif; font-size: 2rem; font-weight: 900; color: var(--text-primary); margin-bottom: 8px; }
+.confirmed-subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 32px; }
+
+.booking-receipt { background: var(--bg-primary); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px; text-align: left; }
+.receipt-header { display: flex; justify-content: space-between; align-items: center; font-weight: 700; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+.receipt-row { display: flex; justify-content: space-between; font-size: 0.875rem; padding: 6px 0; color: var(--text-secondary); }
+.receipt-row.total { border-top: 1px solid var(--border); margin-top: 8px; padding-top: 12px; font-size: 1rem; color: var(--text-primary); }
+.receipt-row.total strong { color: var(--accent-3); font-size: 1.1rem; }
+.confirmed-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }

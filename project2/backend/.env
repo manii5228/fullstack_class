@@ -1,0 +1,10 @@
+PORT=5000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=vtu24573
+DB_NAME=eventbooking
+JWT_SECRET=super_secret_jwt_key_2024_eventbooking
+JWT_EXPIRES_IN=7d
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
+FRONTEND_URL=http://localhost:3000
