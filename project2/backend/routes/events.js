@@ -132,7 +132,7 @@ router.post('/:id/clone', authenticateAdmin, async (req, res) => {
     const e = events[0];
     const [result] = await db.query(
       'INSERT INTO events (title, department, description, venue, event_date, event_time, price, total_tickets, available_tickets, category, tags, poster_url, status, difficulty_level) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [`[Copy] ${e.title}`, e.department, e.description, e.venue, e.event_date, e.event_time, e.price, e.total_tickets, e.total_tickets, e.category, e.tags, e.poster_url, 'inactive', e.difficulty_level]
+      [`[Copy] ${e.title}`, e.department, e.description, e.venue, e.event_date, e.event_time, e.price, e.total_tickets, e.total_tickets, e.category, typeof e.tags === 'string' ? e.tags : JSON.stringify(e.tags || []), e.poster_url, 'inactive', e.difficulty_level]
     );
     await db.query('INSERT INTO event_analytics (event_id) VALUES (?)', [result.insertId]);
     res.json({ message: 'Event cloned', event_id: result.insertId });

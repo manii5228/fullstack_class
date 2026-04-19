@@ -1,3 +1,35 @@
+/* Modal Overlay Background */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+}
+
+/* Modal Content Box */
+.modal {
+  background: var(--bg-secondary, #FFFFFF);
+  border-radius: var(--radius-lg, 24px);
+  padding: 32px;
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  position: relative;
+  animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 .event-modal { max-width: 720px; }
 
 .modal-header {
@@ -6,7 +38,7 @@
   align-items: center;
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 .modal-header h2 { font-family: 'Poppins', sans-serif; font-size: 1.3rem; font-weight: 800; }
 .modal-close {
@@ -28,20 +60,20 @@
 
 textarea.form-input { resize: vertical; min-height: 80px; }
 
-.tag-selector { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-selector { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
 .filter-pill {
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: 100px;
-  border: 1.5px solid var(--border);
+  border: 2px solid rgba(0,0,0,0.15);
   background: white;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #444;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.18s ease;
 }
-.filter-pill:hover { border-color: var(--accent-2); color: var(--accent-2); }
-.filter-pill.active { background: var(--accent-2); color: white; border-color: var(--accent-2); }
+.filter-pill:hover { border-color: #3C0908; color: #3C0908; }
+.filter-pill.active { background: #3C0908; color: #FCEFD5; border-color: #3C0908; }
 
 .modal-footer {
   display: flex;
@@ -49,5 +81,5 @@ textarea.form-input { resize: vertical; min-height: 80px; }
   gap: 12px;
   margin-top: 24px;
   padding-top: 20px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid rgba(0,0,0,0.08);
 }

@@ -21,7 +21,10 @@ A modern, full-stack college event booking platform with Bento Grid UI, Admin In
 The frontend has been built into the backend. You only need to run one command:
 ```bash
 cd backend
-npm start   # Runs the compiled full stack app on port 5000
+node server.js
+
+cd frontend
+npm start  
 ```
 Open `http://localhost:5000` in your browser.
 

@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import Home from './pages/Home';
+import EventsPage from './pages/EventsPage';
 import EventDetailsPage from './pages/EventDetailsPage';
 import BookingPage from './pages/BookingPage';
 import UserDashboard from './pages/UserDashboard';
@@ -31,6 +32,7 @@ function App() {
       <ToastContainer position="top-right" autoClose={3500} hideProgressBar={false} closeOnClick pauseOnHover draggable theme="light" toastStyle={{ borderRadius: '12px' }} />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/events" element={<EventsPage />} />
         <Route path="/events/:id" element={<EventDetailsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />

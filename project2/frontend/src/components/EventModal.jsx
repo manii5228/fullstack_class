@@ -25,7 +25,11 @@ const EventModal = ({ event, onClose, onSaved }) => {
   useEffect(() => {
     if (event) {
       const parsedTags = event.tags ? (typeof event.tags === 'string' ? JSON.parse(event.tags) : event.tags) : [];
-      setForm({ ...defaultForm, ...event, tags: parsedTags, poster: null });
+      // Fix: slice ISO date string to YYYY-MM-DD format required by <input type="date">
+      const formattedDate = event.event_date
+        ? new Date(event.event_date).toISOString().split('T')[0]
+        : '';
+      setForm({ ...defaultForm, ...event, event_date: formattedDate, tags: parsedTags, poster: null });
     } else {
       setForm(defaultForm);
     }
