@@ -69,7 +69,11 @@
   color: var(--c-sand);
   font-weight: 800;
   font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
 }
+.user-avatar:hover { transform: scale(1.1); opacity: 0.85; }
 
 .user-name {
   font-weight: 700;

@@ -21,6 +21,7 @@ const Navbar = () => {
         { to: '/', label: '🏠 Home' },
         { to: '/dashboard', label: '📋 My Dashboard' },
         { to: '/bookings', label: '🎫 My Bookings' },
+        { to: '/profile', label: '👤 My Profile' },
       ];
 
   return (
@@ -47,9 +48,9 @@ const Navbar = () => {
         <div className="navbar-actions">
           {user ? (
             <div className="user-menu">
-              <div className="user-avatar">
+              <Link to="/profile" className="user-avatar" title="My Profile" id="navbar-avatar-link">
                 {user.name?.charAt(0).toUpperCase()}
-              </div>
+              </Link>
               <span className="user-name">{user.name?.split(' ')[0]}</span>
               <button className="btn btn-outline btn-sm" onClick={handleLogout}>Logout</button>
             </div>

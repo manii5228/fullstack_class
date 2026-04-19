@@ -1,0 +1,14 @@
+-- Profile Schema Migration
+-- Run this in your MySQL database to add new profile fields
+
+USE eventbooking;
+
+ALTER TABLE users
+  ADD COLUMN IF NOT EXISTS vtu_number VARCHAR(20) DEFAULT NULL,
+  ADD COLUMN IF NOT EXISTS college VARCHAR(200) DEFAULT 'Visvesvaraya Technological University',
+  ADD COLUMN IF NOT EXISTS year_of_study TINYINT DEFAULT NULL COMMENT '1=1st Year, 2=2nd, 3=3rd, 4=4th',
+  ADD COLUMN IF NOT EXISTS phone VARCHAR(15) DEFAULT NULL,
+  ADD COLUMN IF NOT EXISTS bio TEXT DEFAULT NULL,
+  ADD COLUMN IF NOT EXISTS linkedin_url VARCHAR(500) DEFAULT NULL,
+  ADD COLUMN IF NOT EXISTS github_url VARCHAR(500) DEFAULT NULL,
+  ADD COLUMN IF NOT EXISTS profile_pic VARCHAR(500) DEFAULT NULL;

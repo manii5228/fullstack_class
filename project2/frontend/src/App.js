@@ -14,6 +14,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ManageEvents from './pages/ManageEvents';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('token');
@@ -40,6 +41,7 @@ function App() {
         <Route path="/book/:id" element={<PrivateRoute><BookingPage /></PrivateRoute>} />
         <Route path="/dashboard" element={<PrivateRoute><UserDashboard /></PrivateRoute>} />
         <Route path="/bookings" element={<PrivateRoute><BookingHistory /></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         <Route path="/admin/events" element={<AdminRoute><ManageEvents /></AdminRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
