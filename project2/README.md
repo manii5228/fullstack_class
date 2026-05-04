@@ -87,3 +87,9 @@ project2/
 - 📧 Email confirmation after booking
 - 🔐 JWT authentication (user + admin)
 - 📱 Responsive design
+
+
+
+
+
+

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import { register, saveAuth } from '../services/authService';
 import { toast } from 'react-toastify';
 import Navbar from '../components/Navbar';
+import api from '../services/api';
 import './AuthPage.css';
 
 const RegisterPage = () => {
@@ -37,6 +39,21 @@ const RegisterPage = () => {
     }
   };
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      setLoading(true);
+      const res = await api.post('/auth/google', { token: credentialResponse.credential });
+      const { token, user } = res.data;
+      saveAuth(token, user);
+      toast.success(`Welcome, ${user.name}! 🎉`);
+      navigate('/');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Google Registration failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -45,7 +62,7 @@ const RegisterPage = () => {
           <div className="auth-left bg-pink">
             <div className="auth-brand">
               <span className="brand-icon-lg">🎓</span>
-              <h1>EventBook</h1>
+              <h1>Campus Cultural</h1>
               <p>Your journey starts here.</p>
             </div>
             <div className="auth-feature-list">
@@ -95,6 +112,22 @@ const RegisterPage = () => {
                 {loading ? '⏳ Creating...' : 'Create Account →'}
               </button>
             </form>
+
+            <div className="auth-divider">
+              <span>or</span>
+            </div>
+
+            <div className="google-login-wrap" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => toast.error('Google Registration Failed')}
+                useOneTap
+                theme="outline"
+                size="large"
+                text="signup_with"
+                shape="rectangular"
+              />
+            </div>
 
             <div className="auth-footer-links">
               <span>Already a member?</span> 

@@ -16,7 +16,7 @@ const Navbar = () => {
   };
 
   const navLinks = isAdmin
-    ? [{ to: '/admin', label: '📊 Dashboard' }, { to: '/admin/events', label: '🗂️ Manage Events' }]
+    ? [{ to: '/admin', label: '📊 Dashboard' }, { to: '/admin/events', label: '🗂️ Manage Events' }, { to: '/admin/tickets', label: '🎫 Ticket History' }]
     : [
         { to: '/', label: '🏠 Home' },
         { to: '/dashboard', label: '📋 My Dashboard' },
@@ -29,7 +29,7 @@ const Navbar = () => {
       <div className="navbar-inner">
         <Link to={isAdmin ? '/admin' : '/'} className="navbar-brand">
           <span className="brand-icon">🎪</span>
-          <span className="brand-text">EventBook</span>
+          <span className="brand-text">Campus Cultural</span>
         </Link>
 
         <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>

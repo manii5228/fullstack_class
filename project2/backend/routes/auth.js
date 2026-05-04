@@ -2,8 +2,11 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
 const db = require('../db/connection');
 require('dotenv').config();
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // User Register
 router.post('/register', async (req, res) => {
@@ -54,6 +57,54 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// Google Login
+router.post('/google', async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) return res.status(400).json({ message: 'No Google token provided' });
+
+    // Verify token with Google
+    const ticket = await googleClient.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    
+    const payload = ticket.getPayload();
+    const { email, name, picture } = payload;
+
+    // Check if user exists
+    const [users] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+    let user;
+
+    if (users.length === 0) {
+      // Create new user, since passwords aren't required for Google oauth, insert a dummy hash
+      const [result] = await db.query(
+        'INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)',
+        [name, email, 'GOOGLE_AUTH_NO_PASSWORD', 'student']
+      );
+      user = { user_id: result.insertId, name, email, department: null, role: 'student' };
+    } else {
+      user = users[0];
+    }
+
+    const jwtToken = jwt.sign(
+      { id: user.user_id, email: user.email, name: user.name, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN }
+    );
+
+    res.json({
+      message: 'Google login successful',
+      token: jwtToken,
+      user: { id: user.user_id, name: user.name, email: user.email, department: user.department, role: user.role }
+    });
+
+  } catch (err) {
+    console.error('Google Auth Error:', err);
+    res.status(500).json({ message: 'Server error during Google auth', error: err.message });
   }
 });
 

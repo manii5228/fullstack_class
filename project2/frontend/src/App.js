@@ -15,6 +15,7 @@ import ManageEvents from './pages/ManageEvents';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
+import AdminTickets from './pages/AdminTickets';
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('token');
@@ -44,6 +45,7 @@ function App() {
         <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         <Route path="/admin/events" element={<AdminRoute><ManageEvents /></AdminRoute>} />
+        <Route path="/admin/tickets" element={<AdminRoute><AdminTickets /></AdminRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

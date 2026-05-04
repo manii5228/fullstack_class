@@ -22,9 +22,11 @@ app.use('/api/events', require('./routes/events'));
 app.use('/api/bookings', require('./routes/bookings'));
 app.use('/api/analytics', require('./routes/analytics'));
 app.use('/api/profile', require('./routes/profile'));
+app.use('/api/payments', require('./routes/payments'));
+app.use('/api/qr', require('./routes/qr'));
 
 // Health check
-app.get('/api/health', (req, res) => res.json({ status: 'ok', message: 'EventBook API Running 🚀' }));
+app.get('/api/health', (req, res) => res.json({ status: 'ok', message: 'Campus Cultural API Running 🚀' }));
 
 // Serve frontend build
 app.use(express.static(path.join(__dirname, '../frontend/build')));
@@ -39,6 +41,6 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 EventBook API running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Campus Cultural API running on port ${PORT}`));
 
 module.exports = app;

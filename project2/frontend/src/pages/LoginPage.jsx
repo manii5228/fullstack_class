@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import { login, adminLogin, saveAuth } from '../services/authService';
 import { toast } from 'react-toastify';
 import Navbar from '../components/Navbar';
+import api from '../services/api';
 import './AuthPage.css';
 
 const LoginPage = ({ isAdmin = false }) => {
@@ -37,6 +39,21 @@ const LoginPage = ({ isAdmin = false }) => {
     }
   };
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      setLoading(true);
+      const res = await api.post('/auth/google', { token: credentialResponse.credential });
+      const { token, user } = res.data;
+      saveAuth(token, user);
+      toast.success(`Welcome, ${user.name}! 🎉`);
+      navigate('/');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Google Login failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -45,7 +62,7 @@ const LoginPage = ({ isAdmin = false }) => {
           <div className={`auth-left ${isAdmin ? 'bg-orange' : 'bg-blue'}`}>
             <div className="auth-brand">
               <span className="brand-icon-lg">{isAdmin ? '🛠️' : '🎪'}</span>
-              <h1>EventBook</h1>
+              <h1>Campus Cultural</h1>
               <p>{isAdmin ? 'Admin Intelligence System' : 'Your college event platform'}</p>
             </div>
             <div className="auth-feature-list">
@@ -70,7 +87,7 @@ const LoginPage = ({ isAdmin = false }) => {
             <form onSubmit={handleSubmit} className="auth-form" id="login-form">
               <div className="form-group">
                 <label className="form-label">Email Address</label>
-                <input id="login-email" type="email" autoComplete="new-email" className={`form-input ${errors.email ? 'error' : ''}`} placeholder="hi@eventbook.com" value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
+                <input id="login-email" type="email" autoComplete="new-email" className={`form-input ${errors.email ? 'error' : ''}`} placeholder="hi@campuscultural.com" value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
                 {errors.email && <div className="form-error">⚠️ {errors.email}</div>}
               </div>
               <div className="form-group">
@@ -83,6 +100,26 @@ const LoginPage = ({ isAdmin = false }) => {
                 {loading ? '⏳...' : isAdmin ? 'Unlock Dashboard' : 'Dive In →'}
               </button>
             </form>
+
+            {!isAdmin && (
+              <div className="auth-divider">
+                <span>or</span>
+              </div>
+            )}
+
+            {!isAdmin && (
+              <div className="google-login-wrap" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={() => toast.error('Google Login Failed')}
+                  useOneTap
+                  theme="outline"
+                  size="large"
+                  text="signin_with"
+                  shape="rectangular"
+                />
+              </div>
+            )}
 
             <div className="auth-footer-links">
               {!isAdmin ? (

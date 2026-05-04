@@ -30,7 +30,7 @@ async function sendConfirmationEmail(userEmail, userName, event, booking) {
             <p>💰 <strong>Total Paid:</strong> ₹${booking.total_price}</p>
             <p>🔖 <strong>Booking ID:</strong> #${booking.booking_id}</p>
           </div>
-          <p style="color: #888; font-size: 14px;">Thank you for booking with EventBook!</p>
+          <p style="color: #888; font-size: 14px;">Thank you for booking with Campus Cultural!</p>
         </div>
       `
     };

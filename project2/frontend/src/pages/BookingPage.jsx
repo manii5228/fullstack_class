@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import CapacityIndicator from '../components/CapacityIndicator';
 import { getEvent } from '../services/eventService';
 import { createBooking } from '../services/bookingService';
+import { createPaymentOrder, verifyPayment } from '../services/paymentService';
 import { getUser } from '../services/authService';
 import { toast } from 'react-toastify';
 import './BookingPage.css';
@@ -89,17 +90,62 @@ const BookingPage = () => {
     e.preventDefault();
     if (!validate()) { toast.error('Please fill all required fields'); return; }
     setSubmitting(true);
+
+    const unitPrice = parseFloat(event.price);
+    const isPaid = unitPrice > 0;
+
     try {
-      const res = await createBooking({
-        event_id: parseInt(id),
-        ticket_count: ticketCount,
-        attendees: attendees,
-      });
-      setConfirmed(res.data);
-      toast.success('🎉 Booking confirmed!');
+      if (isPaid) {
+        // Razorpay flow
+        const orderRes = await createPaymentOrder({ event_id: parseInt(id), ticket_count: ticketCount, attendees });
+        const { order_id, amount, currency, key_id, event_title } = orderRes.data;
+
+        // Load Razorpay SDK
+        if (!window.Razorpay) {
+          await new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+            script.onload = resolve; script.onerror = reject;
+            document.body.appendChild(script);
+          });
+        }
+
+        const rzp = new window.Razorpay({
+          key: key_id,
+          amount,
+          currency,
+          name: 'Campus Cultural',
+          description: event_title,
+          order_id,
+          prefill: { name: attendees[0]?.name, email: attendees[0]?.email, contact: attendees[0]?.phone || '' },
+          theme: { color: '#3C0908' },
+          handler: async (response) => {
+            try {
+              const verifyRes = await verifyPayment({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              });
+              setConfirmed(verifyRes.data);
+              toast.success('🎉 Payment successful! Booking confirmed!');
+            } catch (err) {
+              toast.error(err.response?.data?.message || 'Payment verification failed');
+            } finally {
+              setSubmitting(false);
+            }
+          },
+          modal: { ondismiss: () => { setSubmitting(false); toast.info('Payment cancelled'); } },
+        });
+        rzp.open();
+      } else {
+        // Free event — direct booking
+        const res = await createBooking({ event_id: parseInt(id), ticket_count: ticketCount, attendees });
+        setConfirmed(res.data);
+        toast.success('🎉 Booking confirmed!');
+        setSubmitting(false);
+      }
     } catch (err) {
       toast.error(err.response?.data?.message || 'Booking failed');
-    } finally {
       setSubmitting(false);
     }
   };
