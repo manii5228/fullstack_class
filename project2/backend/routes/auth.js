@@ -53,7 +53,7 @@ router.post('/login', async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
-    res.json({ message: 'Login successful', token, user: { id: user.user_id, name: user.name, email: user.email, department: user.department, role: user.role } });
+    res.json({ message: 'Login successful', token, user: { id: user.user_id, name: user.name, email: user.email, department: user.department, role: user.role, profile_pic: user.profile_pic } });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -99,7 +99,7 @@ router.post('/google', async (req, res) => {
     res.json({
       message: 'Google login successful',
       token: jwtToken,
-      user: { id: user.user_id, name: user.name, email: user.email, department: user.department, role: user.role }
+      user: { id: user.user_id, name: user.name, email: user.email, department: user.department, role: user.role, profile_pic: user.profile_pic }
     });
 
   } catch (err) {

@@ -49,7 +49,11 @@ const Navbar = () => {
           {user ? (
             <div className="user-menu">
               <Link to="/profile" className="user-avatar" title="My Profile" id="navbar-avatar-link">
-                {user.name?.charAt(0).toUpperCase()}
+                {user.profile_pic ? (
+                  <img src={`http://localhost:5000${user.profile_pic}`} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                ) : (
+                  user.name?.charAt(0).toUpperCase()
+                )}
               </Link>
               <span className="user-name">{user.name?.split(' ')[0]}</span>
               <button className="btn btn-outline btn-sm" onClick={handleLogout}>Logout</button>

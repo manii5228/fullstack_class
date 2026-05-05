@@ -88,6 +88,10 @@ const ProfilePage = () => {
     try {
       const res = await uploadProfilePic(file);
       setProfile(p => ({ ...p, profile_pic: res.data.profile_pic }));
+      
+      const localUser = getUser();
+      if (localUser) saveAuth(localStorage.getItem('token'), { ...localUser, profile_pic: res.data.profile_pic });
+      
       toast.success('📸 Profile picture updated!');
     } catch (err) {
       toast.error('Failed to upload image');

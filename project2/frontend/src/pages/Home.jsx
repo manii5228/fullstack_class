@@ -49,7 +49,9 @@ const Home = () => {
       <Navbar />
 
       {/* ══════════════ HERO SECTION ══════════════ */}
-      <section className="hero-section">
+      <section className="hero-section hero-animated-bg">
+        <div className="hero-glow hero-glow-1"></div>
+        <div className="hero-glow hero-glow-2"></div>
         <div className="hero-inner">
           <div className="hero-text-col">
             <span className="hero-badge">🎓 VTU College Events Platform</span>
