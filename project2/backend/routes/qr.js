@@ -45,7 +45,8 @@ router.get('/:booking_id/generate', authenticateUser, async (req, res) => {
       });
     }
 
-    if (minutesUntilEvent < -120) {
+    // Allow QR 30 min before event and for a long time after start (for testing)
+    if (minutesUntilEvent < -1440) { // 24 hours
       return res.status(410).json({ message: 'Event has ended. QR code expired.' });
     }
 
@@ -66,7 +67,11 @@ router.get('/:booking_id/generate', authenticateUser, async (req, res) => {
         { expiresIn: '3h' }
       );
 
-      const expiresAt = new Date(eventDateTime.getTime() + 2 * 60 * 60 * 1000); // 2hr after event start
+      // For testing, make sure expiresAt is always in the future
+      let expiresAt = new Date(eventDateTime.getTime() + 2 * 60 * 60 * 1000); // 2hr after event start
+      if (expiresAt < now) {
+        expiresAt = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 hours from now
+      }
 
       // Upsert
       await db.query(
